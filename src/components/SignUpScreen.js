@@ -30,7 +30,7 @@ const SignUpContainer = styled.div`
     color: #fff;
     font-size: 32px;
     line-height: 50px;
-    margin-bottom: 24px;
+    margin-bottom: 28px;
   }
 
   p {
@@ -68,6 +68,6 @@ const StyledForm = styled.form`
     font-size: 20px;
     font-weight: bold;
     line-height: 23px;
-    margin-bottom: 36px;
+    margin-bottom: 32px;
   }
 `;
