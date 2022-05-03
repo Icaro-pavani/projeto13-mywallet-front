@@ -1,29 +1,28 @@
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-export default function LoginScreen() {
+export default function SignUpScreen() {
   return (
-    <LoginContainer>
+    <SignUpContainer>
       <h1>MyWallet</h1>
       <StyledForm>
+        <input type="text" placeholder="Nome" required />
         <input type="email" placeholder="E-mail" required />
         <input type="password" placeholder="Senha" required />
-        <button type="submit">Entrar</button>
+        <input type="password" placeholder="Confirme a senha" required />
+        <button type="submit">Cadastrar</button>
       </StyledForm>
-      <StyledLink to="/signup">
-        <p>Primeira vez? Cadastre-se!</p>
-      </StyledLink>
-    </LoginContainer>
+      <p>Já tem uma conta? Entre agora!</p>
+    </SignUpContainer>
   );
 }
 
-const LoginContainer = styled.div`
+const SignUpContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
-  margin-top: 159px;
+  margin-top: 95px;
   padding: 0px 25px;
 
   h1 {
@@ -71,8 +70,4 @@ const StyledForm = styled.form`
     line-height: 23px;
     margin-bottom: 36px;
   }
-`;
-
-const StyledLink = styled(Link)`
-  text-decoration: none;
 `;
