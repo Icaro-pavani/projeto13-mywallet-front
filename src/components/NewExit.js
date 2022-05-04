@@ -1,12 +1,34 @@
+import { useState } from "react";
 import styled from "styled-components";
 
 export default function NewExit() {
+  const [exitInfo, setExitInfo] = useState({});
+
+  function updateExitInfo(event) {
+    const { name, value } = event.target;
+    setExitInfo((prevState) => ({ ...prevState, [name]: value }));
+  }
+
+  console.log(exitInfo);
+
   return (
     <NewExitContainer>
       <h2>Nova Saída</h2>
       <StyledForm>
-        <input type="text" placeholder="Valor" required />
-        <input type="text" placeholder="Descrição" required />
+        <input
+          type="number"
+          name="value"
+          placeholder="Valor"
+          onChange={updateExitInfo}
+          required
+        />
+        <input
+          type="text"
+          name="description"
+          placeholder="Descrição"
+          onChange={updateExitInfo}
+          required
+        />
         <button type="submit">Salvar Saída</button>
       </StyledForm>
     </NewExitContainer>

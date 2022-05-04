@@ -1,13 +1,33 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export default function LoginScreen() {
+  const [loginInfo, setLoginInfo] = useState({});
+
+  function updateLoginInfo(event) {
+    const { name, value } = event.target;
+    setLoginInfo((prevState) => ({ ...prevState, [name]: value }));
+  }
+
   return (
     <LoginContainer>
       <h1>MyWallet</h1>
       <StyledForm>
-        <input type="email" placeholder="E-mail" required />
-        <input type="password" placeholder="Senha" required />
+        <input
+          type="email"
+          name="email"
+          placeholder="E-mail"
+          onChange={updateLoginInfo}
+          required
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Senha"
+          onChange={updateLoginInfo}
+          required
+        />
         <button type="submit">Entrar</button>
       </StyledForm>
       <StyledLink to="/signup">

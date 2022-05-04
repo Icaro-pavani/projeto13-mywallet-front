@@ -1,15 +1,49 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export default function SignUpScreen() {
+  const [signUpInfo, setSignUpInfo] = useState({});
+
+  function updateSignUpInfo(event) {
+    const { name, value } = event.target;
+    setSignUpInfo((prevState) => ({ ...prevState, [name]: value }));
+  }
+
+  console.log(signUpInfo);
+
   return (
     <SignUpContainer>
       <h1>MyWallet</h1>
       <StyledForm>
-        <input type="text" placeholder="Nome" required />
-        <input type="email" placeholder="E-mail" required />
-        <input type="password" placeholder="Senha" required />
-        <input type="password" placeholder="Confirme a senha" required />
+        <input
+          type="text"
+          name="name"
+          placeholder="Nome"
+          onChange={updateSignUpInfo}
+          required
+        />
+        <input
+          type="email"
+          name="email"
+          placeholder="E-mail"
+          onChange={updateSignUpInfo}
+          required
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Senha"
+          onChange={updateSignUpInfo}
+          required
+        />
+        <input
+          type="password"
+          name="repeat_password"
+          placeholder="Confirme a senha"
+          onChange={updateSignUpInfo}
+          required
+        />
         <button type="submit">Cadastrar</button>
       </StyledForm>
       <StyledLink to="/">

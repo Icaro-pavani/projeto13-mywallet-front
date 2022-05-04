@@ -1,12 +1,34 @@
+import { useState } from "react";
 import styled from "styled-components";
 
 export default function NewEntry() {
+  const [entryInfo, setEntryInfo] = useState({});
+
+  function updateEntryInfo(event) {
+    const { name, value } = event.target;
+    setEntryInfo((prevState) => ({ ...prevState, [name]: value }));
+  }
+
+  console.log(entryInfo);
+
   return (
     <NewEntryContainer>
       <h2>Nova Entrada</h2>
       <StyledForm>
-        <input type="text" placeholder="Valor" required />
-        <input type="text" placeholder="Descrição" required />
+        <input
+          type="number"
+          name="value"
+          placeholder="Valor"
+          onChange={updateEntryInfo}
+          required
+        />
+        <input
+          type="text"
+          name="description"
+          placeholder="Descrição"
+          onChange={updateEntryInfo}
+          required
+        />
         <button type="submit">Salvar Entrada</button>
       </StyledForm>
     </NewEntryContainer>
