@@ -4,6 +4,7 @@ import GlobalStyle from "../theme/GlobalStyle";
 import LoginScreen from "./LoginScreen";
 import SignUpScreen from "./SignUpScreen";
 import NewEntry from "./NewEntry";
+import NewExit from "./NewExit";
 import MainScreen from "./MainScreen";
 
 export default function App() {
@@ -16,6 +17,7 @@ export default function App() {
           <Route path="/signup" element={<SignUpScreen />} />
           <Route path="/main" element={<MainScreen />} />
           <Route path="/newentry" element={<NewEntry />} />
+          <Route path="/newexit" element={<NewExit />} />
         </Routes>
       </BrowserRouter>
     </>

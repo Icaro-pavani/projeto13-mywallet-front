@@ -1,26 +1,30 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import {
   IoMdExit,
   IoMdAddCircleOutline,
   IoMdRemoveCircleOutline,
 } from "react-icons/io";
+import { useMemo } from "react/cjs/react.production.min";
 
 export default function MainScreen() {
+  const navigate = useNavigate();
+
   return (
     <MainScreenContainer>
       <header>
         <h2>Olá, Fulano</h2>
-        <IoMdExit className="exit-icon" />
+        <IoMdExit className="exit-icon" onClick={() => navigate("/")}/>
       </header>
       <MainContent>
         <p>Não há registros de entrada ou saída</p>
       </MainContent>
       <Entries>
-        <Entry>
+        <Entry onClick={() => navigate("/newentry")}>
           <IoMdAddCircleOutline className="add-icon" />
           <p>Nova entrada</p>
         </Entry>
-        <Entry>
+        <Entry onClick={() => navigate("/newentry")}>
           <IoMdRemoveCircleOutline className="add-icon" />
           <p>Nova saída</p>
         </Entry>

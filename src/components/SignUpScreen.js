@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export default function SignUpScreen() {
@@ -11,7 +12,9 @@ export default function SignUpScreen() {
         <input type="password" placeholder="Confirme a senha" required />
         <button type="submit">Cadastrar</button>
       </StyledForm>
-      <p>Já tem uma conta? Entre agora!</p>
+      <StyledLink to="/">
+        <p>Já tem uma conta? Entre agora!</p>
+      </StyledLink>
     </SignUpContainer>
   );
 }
@@ -70,4 +73,8 @@ const StyledForm = styled.form`
     line-height: 23px;
     margin-bottom: 32px;
   }
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
 `;
