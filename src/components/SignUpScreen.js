@@ -2,9 +2,11 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function SignUpScreen() {
   const [signUpInfo, setSignUpInfo] = useState({});
+  const [disabled, setDisabled] = useState(false);
 
   const URL = "http://localhost:5000/sign-up";
 
@@ -17,6 +19,7 @@ export default function SignUpScreen() {
 
   function signUpUser(event) {
     event.preventDefault();
+    setDisabled(true);
 
     const promise = axios.post(URL, signUpInfo);
     promise.then((response) => {
@@ -26,6 +29,7 @@ export default function SignUpScreen() {
     promise.catch((error) => {
       console.log(error.response.data);
       alert(error.response.data);
+      setDisabled(false);
     });
   }
 
@@ -39,6 +43,7 @@ export default function SignUpScreen() {
           type="text"
           name="name"
           placeholder="Nome"
+          disabled={disabled}
           onChange={updateSignUpInfo}
           required
         />
@@ -46,6 +51,7 @@ export default function SignUpScreen() {
           type="email"
           name="email"
           placeholder="E-mail"
+          disabled={disabled}
           onChange={updateSignUpInfo}
           required
         />
@@ -53,6 +59,7 @@ export default function SignUpScreen() {
           type="password"
           name="password"
           placeholder="Senha"
+          disabled={disabled}
           onChange={updateSignUpInfo}
           required
         />
@@ -60,10 +67,17 @@ export default function SignUpScreen() {
           type="password"
           name="repeat_password"
           placeholder="Confirme a senha"
+          disabled={disabled}
           onChange={updateSignUpInfo}
           required
         />
-        <button type="submit">Cadastrar</button>
+        <button type="submit" disabled={disabled}>
+          {disabled ? (
+            <ThreeDots color="#fff" height={40} width={40} />
+          ) : (
+            "Cadastrar"
+          )}
+        </button>
       </StyledForm>
       <StyledLink to="/">
         <p>Já tem uma conta? Entre agora!</p>
@@ -112,9 +126,15 @@ const StyledForm = styled.form`
     margin-bottom: 13px;
     font-family: "Raleway", sans-serif;
     padding-left: 15px;
+    &:disabled {
+      background-color: #aaa;
+    }
   }
 
   button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 46px;
     border: none;
     border-radius: 5px;
@@ -125,6 +145,9 @@ const StyledForm = styled.form`
     font-weight: bold;
     line-height: 23px;
     margin-bottom: 32px;
+    &:disabled {
+      opacity: 0.5;
+    }
   }
 `;
 

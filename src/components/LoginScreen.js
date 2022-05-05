@@ -1,23 +1,47 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import axios from "axios";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function LoginScreen() {
   const [loginInfo, setLoginInfo] = useState({});
+  const [disabled, setDisabled] = useState(false);
+
+  const navigate = useNavigate();
+
+  const URL = "http://localhost:5000/sign-in";
 
   function updateLoginInfo(event) {
     const { name, value } = event.target;
     setLoginInfo((prevState) => ({ ...prevState, [name]: value }));
   }
 
+  function loginInUser(event) {
+    event.preventDefault();
+    setDisabled(true);
+
+    const promise = axios.post(URL, loginInfo);
+    promise.then((response) => {
+      console.log(response.data);
+      navigate("/main");
+    });
+    promise.catch((error) => {
+      console.log(error.response.data);
+      alert(error.response.data);
+      setDisabled(false);
+    });
+  }
+
   return (
     <LoginContainer>
       <h1>MyWallet</h1>
-      <StyledForm>
+      <StyledForm onSubmit={loginInUser}>
         <input
           type="email"
           name="email"
           placeholder="E-mail"
+          disabled={disabled}
           onChange={updateLoginInfo}
           required
         />
@@ -25,10 +49,17 @@ export default function LoginScreen() {
           type="password"
           name="password"
           placeholder="Senha"
+          disabled={disabled}
           onChange={updateLoginInfo}
           required
         />
-        <button type="submit">Entrar</button>
+        <button type="submit" disabled={disabled}>
+          {disabled ? (
+            <ThreeDots color="#fff" height={40} width={40} />
+          ) : (
+            "Entrar"
+          )}
+        </button>
       </StyledForm>
       <StyledLink to="/signup">
         <p>Primeira vez? Cadastre-se!</p>
@@ -77,9 +108,15 @@ const StyledForm = styled.form`
     margin-bottom: 13px;
     font-family: "Raleway", sans-serif;
     padding-left: 15px;
+    &:disabled {
+      background-color: #aaa;
+    }
   }
 
   button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 46px;
     border: none;
     border-radius: 5px;
@@ -90,6 +127,9 @@ const StyledForm = styled.form`
     font-weight: bold;
     line-height: 23px;
     margin-bottom: 36px;
+    &:disabled {
+      opacity: 0.5;
+    }
   }
 `;
 
