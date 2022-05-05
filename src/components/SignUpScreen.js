@@ -1,13 +1,32 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import axios from "axios";
 
 export default function SignUpScreen() {
   const [signUpInfo, setSignUpInfo] = useState({});
 
+  const URL = "http://localhost:5000/sign-up";
+
+  const navigate = useNavigate();
+
   function updateSignUpInfo(event) {
     const { name, value } = event.target;
     setSignUpInfo((prevState) => ({ ...prevState, [name]: value }));
+  }
+
+  function signUpUser(event) {
+    event.preventDefault();
+
+    const promise = axios.post(URL, signUpInfo);
+    promise.then((response) => {
+      console.log(response.data);
+      navigate("/");
+    });
+    promise.catch((error) => {
+      console.log(error.response.data);
+      alert(error.response.data);
+    });
   }
 
   console.log(signUpInfo);
@@ -15,7 +34,7 @@ export default function SignUpScreen() {
   return (
     <SignUpContainer>
       <h1>MyWallet</h1>
-      <StyledForm>
+      <StyledForm onSubmit={signUpUser}>
         <input
           type="text"
           name="name"

@@ -5,7 +5,6 @@ import {
   IoMdAddCircleOutline,
   IoMdRemoveCircleOutline,
 } from "react-icons/io";
-import { useMemo } from "react/cjs/react.production.min";
 
 export default function MainScreen() {
   const navigate = useNavigate();
@@ -14,7 +13,7 @@ export default function MainScreen() {
     <MainScreenContainer>
       <header>
         <h2>Olá, Fulano</h2>
-        <IoMdExit className="exit-icon" onClick={() => navigate("/")}/>
+        <IoMdExit className="exit-icon" onClick={() => navigate("/")} />
       </header>
       <MainContent>
         <p>Não há registros de entrada ou saída</p>
@@ -24,7 +23,7 @@ export default function MainScreen() {
           <IoMdAddCircleOutline className="add-icon" />
           <p>Nova entrada</p>
         </Entry>
-        <Entry onClick={() => navigate("/newentry")}>
+        <Entry onClick={() => navigate("/newexit")}>
           <IoMdRemoveCircleOutline className="add-icon" />
           <p>Nova saída</p>
         </Entry>
@@ -69,6 +68,7 @@ const MainContent = styled.div`
   p {
     height: 46px;
     width: 180px;
+    color: #868686;
     text-align: center;
     font-size: 20px;
     line-height: 23px;
