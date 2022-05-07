@@ -1,22 +1,61 @@
 import { useNavigate } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import {
   IoMdExit,
   IoMdAddCircleOutline,
   IoMdRemoveCircleOutline,
 } from "react-icons/io";
+import axios from "axios";
+
+import UserInfoContext from "../context/UserInfoContext";
+import EntryLine from "./EntryLine";
 
 export default function MainScreen() {
+  const { userInfo, setEntryType } = useContext(UserInfoContext);
+  const [entries, setEntries] = useState([]);
+
+  const URL_ENTRIES = "http://localhost:5000/entry";
+
+  useEffect(() => {
+    const promise = axios.get(URL_ENTRIES, {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    });
+    promise.then(({ data }) => {
+      setEntries(data);
+    });
+    promise.catch((error) => console.log(error.response));
+  }, [userInfo]);
+
   const navigate = useNavigate();
+
+  let total = 0;
 
   return (
     <MainScreenContainer>
       <header>
-        <h2>Olá, Fulano</h2>
+        <h2>Olá, {userInfo.name}</h2>
         <IoMdExit className="exit-icon" onClick={() => navigate("/")} />
       </header>
       <MainContent>
-        <p>Não há registros de entrada ou saída</p>
+        {entries ? (
+          <>
+            <ul>
+              {entries.map((entry, index) => {
+                total += entry.value;
+                return <EntryLine key={index} entry={entry} />;
+              })}
+            </ul>
+            <Total>
+              <h2>SALDO</h2>
+              <h5>{total.toFixed(2)}</h5>
+            </Total>
+          </>
+        ) : (
+          <p>Não há registros de entrada ou saída</p>
+        )}
       </MainContent>
       <Entries>
         <Entry onClick={() => navigate("/newentry")}>
@@ -60,9 +99,13 @@ const MainContent = styled.div`
   background-color: #fff;
   height: 446px;
   border-radius: 5px;
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* position: relative;
   top: 0;
-  left: 0;
+  left: 0; */
   margin-bottom: 13px;
 
   p {
@@ -72,9 +115,16 @@ const MainContent = styled.div`
     text-align: center;
     font-size: 20px;
     line-height: 23px;
-    position: absolute;
+    /* position: absolute;
     top: calc(50% - 23px);
-    left: calc(50% - 90px);
+    left: calc(50% - 90px); */
+  }
+
+  ul {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
   }
 `;
 
@@ -112,4 +162,10 @@ const Entry = styled.div`
     bottom: 9px;
     left: 10px;
   }
+`;
+
+const Total = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 `;

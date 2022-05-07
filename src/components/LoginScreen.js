@@ -1,16 +1,27 @@
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import { ThreeDots } from "react-loader-spinner";
 
+import UserInfoContext from "./../context/UserInfoContext";
+
 export default function LoginScreen() {
   const [loginInfo, setLoginInfo] = useState({});
   const [disabled, setDisabled] = useState(false);
 
-  const navigate = useNavigate();
+  const { userInfo, setUserInfo } = useContext(UserInfoContext);
+
+  let loginReturnObject = localStorage.getItem("loginInfo");
 
   const URL = "http://localhost:5000/sign-in";
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (userInfo?.token) {
+      navigate("/wallet");
+    }
+  }, [userInfo, navigate]);
 
   function updateLoginInfo(event) {
     const { name, value } = event.target;
@@ -22,9 +33,11 @@ export default function LoginScreen() {
     setDisabled(true);
 
     const promise = axios.post(URL, loginInfo);
-    promise.then((response) => {
-      console.log(response.data);
-      navigate("/main");
+    promise.then(({ data }) => {
+      loginReturnObject = JSON.stringify(data);
+      localStorage.setItem("loginInfo", loginReturnObject);
+      setUserInfo(data);
+      navigate("/wallet");
     });
     promise.catch((error) => {
       console.log(error.response.data);
