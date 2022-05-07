@@ -44,13 +44,19 @@ export default function MainScreen() {
           <>
             <ul>
               {entries.map((entry, index) => {
-                total += entry.value;
+                if (entry.type === "credit") {
+                  total += entry.value;
+                } else {
+                  total -= entry.value;
+                }
                 return <EntryLine key={index} entry={entry} />;
               })}
             </ul>
             <Total>
-              <h2>SALDO</h2>
-              <h5>{total.toFixed(2)}</h5>
+              <h3>SALDO</h3>
+              <h4 className={total >= 0 ? "credit" : "debit"}>
+                {Math.abs(total).toFixed(2).replace(".", ",")}
+              </h4>
             </Total>
           </>
         ) : (
@@ -103,9 +109,7 @@ const MainContent = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* position: relative;
-  top: 0;
-  left: 0; */
+  padding: 23px 7px 10px;
   margin-bottom: 13px;
 
   p {
@@ -115,9 +119,6 @@ const MainContent = styled.div`
     text-align: center;
     font-size: 20px;
     line-height: 23px;
-    /* position: absolute;
-    top: calc(50% - 23px);
-    left: calc(50% - 90px); */
   }
 
   ul {
@@ -168,4 +169,24 @@ const Total = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
+
+  h3 {
+    font-size: 17px;
+    font-weight: bold;
+    line-height: 20px;
+    color: #000;
+  }
+
+  h4 {
+    font-size: 17px;
+    line-height: 20px;
+  }
+
+  .credit {
+    color: #03ac00;
+  }
+
+  .debit {
+    color: #c70000;
+  }
 `;
