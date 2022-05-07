@@ -33,6 +33,11 @@ export default function MainScreen() {
 
   let total = 0;
 
+  function addNewEntry(type) {
+    setEntryType(type);
+    navigate("/new-entry");
+  }
+
   return (
     <MainScreenContainer>
       <header>
@@ -64,11 +69,11 @@ export default function MainScreen() {
         )}
       </MainContent>
       <Entries>
-        <Entry onClick={() => navigate("/newentry")}>
+        <Entry onClick={() => addNewEntry("credit")}>
           <IoMdAddCircleOutline className="add-icon" />
           <p>Nova entrada</p>
         </Entry>
-        <Entry onClick={() => navigate("/newexit")}>
+        <Entry onClick={() => addNewEntry("debit")}>
           <IoMdRemoveCircleOutline className="add-icon" />
           <p>Nova saída</p>
         </Entry>

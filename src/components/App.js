@@ -30,8 +30,8 @@ export default function App() {
             <Route path="/" element={<LoginScreen />} />
             <Route path="/signup" element={<SignUpScreen />} />
             <Route path="/wallet" element={<MainScreen />} />
-            <Route path="/newentry" element={<NewEntry />} />
-            <Route path="/newexit" element={<NewExit />} />
+            <Route path="/new-entry" element={<NewEntry />} />
+            {/* <Route path="/newexit" element={<NewExit />} /> */}
           </Routes>
         </BrowserRouter>
       </UserInfoContext.Provider>

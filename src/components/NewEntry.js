@@ -1,19 +1,21 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import styled from "styled-components";
+
+import UserInfoContext from "../context/UserInfoContext";
 
 export default function NewEntry() {
   const [entryInfo, setEntryInfo] = useState({});
+
+  const { userInfo, entryType } = useContext(UserInfoContext);
 
   function updateEntryInfo(event) {
     const { name, value } = event.target;
     setEntryInfo((prevState) => ({ ...prevState, [name]: value }));
   }
 
-  console.log(entryInfo);
-
   return (
     <NewEntryContainer>
-      <h2>Nova Entrada</h2>
+      <h2>Nova {entryType === "credit" ? "entrada" : "saída"}</h2>
       <StyledForm>
         <input
           type="number"
@@ -29,7 +31,9 @@ export default function NewEntry() {
           onChange={updateEntryInfo}
           required
         />
-        <button type="submit">Salvar Entrada</button>
+        <button type="submit">
+          Salvar {entryType === "credit" ? "entrada" : "saída"}
+        </button>
       </StyledForm>
     </NewEntryContainer>
   );
