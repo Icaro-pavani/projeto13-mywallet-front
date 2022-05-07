@@ -1,26 +1,58 @@
 import { useState, useContext } from "react";
 import styled from "styled-components";
+import axios from "axios";
+import { ThreeDots } from "react-loader-spinner";
+import { useNavigate } from "react-router-dom";
 
 import UserInfoContext from "../context/UserInfoContext";
 
 export default function NewEntry() {
   const [entryInfo, setEntryInfo] = useState({});
+  const [disabled, setDisabled] = useState(false);
 
   const { userInfo, entryType } = useContext(UserInfoContext);
+
+  const ENTRY_URL = "http://localhost:5000/entry";
+
+  const navigate = useNavigate();
 
   function updateEntryInfo(event) {
     const { name, value } = event.target;
     setEntryInfo((prevState) => ({ ...prevState, [name]: value }));
   }
 
+  function submitNewEntry(event) {
+    event.preventDefault();
+    setDisabled(true);
+
+    const promise = axios.post(
+      ENTRY_URL,
+      { ...entryInfo, type: entryType },
+      {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      }
+    );
+    promise.then((response) => {
+      navigate("/wallet");
+    });
+    promise.catch((error) => {
+      alert(error.response.data);
+      setDisabled(false);
+    });
+  }
+
   return (
     <NewEntryContainer>
       <h2>Nova {entryType === "credit" ? "entrada" : "saída"}</h2>
-      <StyledForm>
+      <StyledForm onSubmit={submitNewEntry}>
         <input
           type="number"
           name="value"
           placeholder="Valor"
+          step="0.01"
+          disabled={disabled}
           onChange={updateEntryInfo}
           required
         />
@@ -28,11 +60,16 @@ export default function NewEntry() {
           type="text"
           name="description"
           placeholder="Descrição"
+          disabled={disabled}
           onChange={updateEntryInfo}
           required
         />
-        <button type="submit">
-          Salvar {entryType === "credit" ? "entrada" : "saída"}
+        <button type="submit" disabled={disabled}>
+          {disabled ? (
+            <ThreeDots color="#fff" height={40} width={40} />
+          ) : (
+            `Salvar ${entryType === "credit" ? "entrada" : "saída"}`
+          )}
         </button>
       </StyledForm>
     </NewEntryContainer>
@@ -70,6 +107,9 @@ const StyledForm = styled.form`
   }
 
   button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 46px;
     border: none;
     border-radius: 5px;

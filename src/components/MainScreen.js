@@ -185,6 +185,7 @@ const Total = styled.div`
   h4 {
     font-size: 17px;
     line-height: 20px;
+    opacity: 0.9;
   }
 
   .credit {

@@ -74,7 +74,7 @@ export default function LoginScreen() {
           )}
         </button>
       </StyledForm>
-      <StyledLink to="/signup">
+      <StyledLink to="/sign-up">
         <p>Primeira vez? Cadastre-se!</p>
       </StyledLink>
     </LoginContainer>

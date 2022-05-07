@@ -28,7 +28,7 @@ export default function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<LoginScreen />} />
-            <Route path="/signup" element={<SignUpScreen />} />
+            <Route path="/sign-up" element={<SignUpScreen />} />
             <Route path="/wallet" element={<MainScreen />} />
             <Route path="/new-entry" element={<NewEntry />} />
             {/* <Route path="/newexit" element={<NewExit />} /> */}
