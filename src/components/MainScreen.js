@@ -12,7 +12,7 @@ import UserInfoContext from "../context/UserInfoContext";
 import EntryLine from "./EntryLine";
 
 export default function MainScreen() {
-  const { userInfo, setEntryType } = useContext(UserInfoContext);
+  const { userInfo, setUserInfo, setEntryType } = useContext(UserInfoContext);
   const [entries, setEntries] = useState([]);
 
   const URL_ENTRIES = "http://localhost:5000/entry";
@@ -38,11 +38,17 @@ export default function MainScreen() {
     navigate("/new-entry");
   }
 
+  function logout() {
+    localStorage.clear();
+    setUserInfo({});
+    navigate("/");
+  }
+
   return (
     <MainScreenContainer>
       <header>
         <h2>Olá, {userInfo.name}</h2>
-        <IoMdExit className="exit-icon" onClick={() => navigate("/")} />
+        <IoMdExit className="exit-icon" onClick={logout} />
       </header>
       <MainContent>
         {entries ? (

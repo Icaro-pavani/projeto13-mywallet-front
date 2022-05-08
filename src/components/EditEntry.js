@@ -51,6 +51,7 @@ export default function NewExit() {
           type="number"
           name="value"
           placeholder="Valor"
+          step="0.01"
           onChange={updateEditInfo}
           disabled={disabled}
           value={editInfo.value}
