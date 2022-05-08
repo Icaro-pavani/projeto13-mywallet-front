@@ -15,7 +15,7 @@ export default function MainScreen() {
   const { userInfo, setUserInfo, setEntryType } = useContext(UserInfoContext);
   const [entries, setEntries] = useState([]);
 
-  const URL_ENTRIES = "http://localhost:5000/entry";
+  const URL_ENTRIES = "https://projeto13-mywallet-ipt.herokuapp.com/entry";
 
   useEffect(() => {
     const promise = axios.get(URL_ENTRIES, {

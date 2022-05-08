@@ -8,7 +8,7 @@ export default function SignUpScreen() {
   const [signUpInfo, setSignUpInfo] = useState({});
   const [disabled, setDisabled] = useState(false);
 
-  const URL = "http://localhost:5000/sign-up";
+  const URL = "https://projeto13-mywallet-ipt.herokuapp.com/sign-up";
 
   const navigate = useNavigate();
 
@@ -23,7 +23,6 @@ export default function SignUpScreen() {
 
     const promise = axios.post(URL, signUpInfo);
     promise.then((response) => {
-      console.log(response.data);
       navigate("/");
     });
     promise.catch((error) => {
@@ -32,8 +31,6 @@ export default function SignUpScreen() {
       setDisabled(false);
     });
   }
-
-  console.log(signUpInfo);
 
   return (
     <SignUpContainer>

@@ -14,7 +14,7 @@ export default function LoginScreen() {
 
   let loginReturnObject = localStorage.getItem("loginInfo");
 
-  const URL = "http://localhost:5000/sign-in";
+  const URL = "https://projeto13-mywallet-ipt.herokuapp.com/sign-in";
   const navigate = useNavigate();
 
   useEffect(() => {

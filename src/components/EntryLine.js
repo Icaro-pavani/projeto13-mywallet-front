@@ -10,7 +10,7 @@ export default function EntryLine({ entry }) {
 
   const navigate = useNavigate();
 
-  const ENTRY_URL = "http://localhost:5000/entry";
+  const ENTRY_URL = "https://projeto13-mywallet-ipt.herokuapp.com/entry";
 
   function deleteEntry(entryId) {
     if (window.confirm("Você realmente deseja deletar este dado?")) {
