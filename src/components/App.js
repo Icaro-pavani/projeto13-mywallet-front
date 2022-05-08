@@ -5,7 +5,7 @@ import GlobalStyle from "../theme/GlobalStyle";
 import LoginScreen from "./LoginScreen";
 import SignUpScreen from "./SignUpScreen";
 import NewEntry from "./NewEntry";
-import NewExit from "./NewExit";
+import EditEntry from "./EditEntry";
 import MainScreen from "./MainScreen";
 
 import UserInfoContext from "./../context/UserInfoContext";
@@ -31,7 +31,7 @@ export default function App() {
             <Route path="/sign-up" element={<SignUpScreen />} />
             <Route path="/wallet" element={<MainScreen />} />
             <Route path="/new-entry" element={<NewEntry />} />
-            {/* <Route path="/newexit" element={<NewExit />} /> */}
+            <Route path="/edit-entry" element={<EditEntry />} />
           </Routes>
         </BrowserRouter>
       </UserInfoContext.Provider>

@@ -3,15 +3,18 @@ import { useContext } from "react";
 import axios from "axios";
 
 import UserInfoContext from "../context/UserInfoContext";
+import { useNavigate } from "react-router-dom";
 
 export default function EntryLine({ entry }) {
   const { userInfo, setUserInfo } = useContext(UserInfoContext);
+
+  const navigate = useNavigate();
 
   const ENTRY_URL = "http://localhost:5000/entry";
 
   function deleteEntry(entryId) {
     if (window.confirm("Você realmente deseja deletar este dado?")) {
-      const promise = axios.delete(`${ENTRY_URL}/${entry._id}`, {
+      const promise = axios.delete(`${ENTRY_URL}/${entryId}`, {
         headers: {
           Authorization: `Bearer ${userInfo.token}`,
         },
@@ -23,11 +26,17 @@ export default function EntryLine({ entry }) {
     }
   }
 
+  function editEntry() {
+    navigate("/edit-entry", { state: entry });
+  }
+
   return (
     <StyledLine>
       <Description>
         <span>{entry.date}</span>
-        <h5 className="description">{entry.description}</h5>
+        <h5 className="description" onClick={editEntry}>
+          {entry.description}
+        </h5>
       </Description>
       <h5 className={`value ${entry.type}`}>
         {entry.value.toFixed(2).replace(".", ",")}{" "}
