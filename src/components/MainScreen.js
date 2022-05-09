@@ -51,7 +51,7 @@ export default function MainScreen() {
         <IoMdExit className="exit-icon" onClick={logout} />
       </header>
       <MainContent>
-        {entries ? (
+        {entries.length > 0 ? (
           <>
             <ul>
               {entries.map((entry, index) => {
